@@ -14,6 +14,10 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+import environ 
+
+env=environ.Env()
+environ.Env.read_env()
 
 
 # Quick-start development settings - unsuitable for production
@@ -75,8 +79,12 @@ WSGI_APPLICATION = 'dep_pro.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': env("DB"),
+        "USER":env("USER"),
+        "PASSWORD":env("PASS"),
+        "HOST":env("HOST"), #127.0.0.1
+        "PORT":env("PORT")
     }
 }
 
