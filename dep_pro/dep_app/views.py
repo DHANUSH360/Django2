@@ -26,7 +26,16 @@ def reg_user(request):
 
             new_user=CloudTable.objects.create(id=user_id,email=user_email,name=user_name,mob=user_mob,profile_pic=img_url["secure_url"])
             
-            return JsonResponse({"msg": "User created successfully!","details":list(new_user.values())})
+            return JsonResponse({
+              "msg": "User created successfully!",
+              "details": {
+              "id": new_user.id,
+              "name": new_user.name,
+              "email": new_user.email,
+              "mob": new_user.mob,
+              "profile_pic": new_user.profile_pic
+             }
+        })
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)
     return JsonResponse({"error": "Only POST method allowed"}, status=405)
